@@ -1,0 +1,18 @@
+== My Scheme
+
+== Introduction
+
+Here's my (work in progress) interpretation of "Peter Norvig's Scheme":http://norvig.com/lispy.html. The language of implementation is Ruby, and I'm working in a TDD-style using TestUnit.
+
+== Usage
+
+    require 'lisp'
+
+    # I haven't implemented a default environment yet,
+    # here's a simple one
+    env = Env.new
+    env['+'] = Proc.new {|a,b| a + b}
+
+    # Eval the lisp code
+    code = '(+ 1 (+ 1 2))'
+    lisp_eval(parse(code), env) #=> 4 
