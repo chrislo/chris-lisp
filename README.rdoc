@@ -1,8 +1,8 @@
-== My Scheme
+== My Lisp
 
 == Introduction
 
-Here's my (work in progress) interpretation of "Peter Norvig's Scheme":http://norvig.com/lispy.html. The language of implementation is Ruby, and I'm working in a TDD-style using TestUnit.
+Here's my (work in progress) interpretation of Peter Norvig's Scheme[http://norvig.com/lispy.html]. The language of implementation is Ruby, and I'm working in a TDD-style using TestUnit.
 
 == Usage
 
