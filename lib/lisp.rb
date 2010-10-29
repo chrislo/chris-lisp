@@ -57,8 +57,10 @@ end
 
 class Env < Hash
   attr_reader :outer
-  def initialize(outer = nil)
+  def initialize(keys = [], values = [], outer = nil)
     @outer = outer
+    pairs = keys.zip(values)
+    pairs.each {|pair| self[pair[0]] = pair[1]}
   end
 
   def find(var)

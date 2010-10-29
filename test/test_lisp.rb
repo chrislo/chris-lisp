@@ -15,6 +15,14 @@ class EnvTest < Test::Unit::TestCase
     assert_equal(5, env[:a])
   end
 
+  def test_initialize_with_kv_pairs
+    keys = ['a', 'b', 'c']
+    values = [1,2,3]
+    env = Env.new(keys, values)
+    assert_equal(2, env['b'])
+    assert_equal(1, env['a'])
+  end
+
   def test_find
     env = Env.new
     env[:a] = 5
@@ -23,7 +31,7 @@ class EnvTest < Test::Unit::TestCase
 
   def test_find_outer_env
     outer_env = Env.new
-    inner_env = Env.new(outer_env)
+    inner_env = Env.new([],[],outer_env)
     outer_env[:a] = 5
     assert_equal(outer_env, inner_env.find(:a))
   end
