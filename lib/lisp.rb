@@ -35,7 +35,7 @@ end
 
 def lisp_eval(x, env = {})
   if x.class == String # symbol
-    return env[x]
+    return env.find(x)[x]
   elsif x.class != Array # constant literal
     return x
   elsif x[0] == 'quote'   # (quote exp)
