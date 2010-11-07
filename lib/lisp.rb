@@ -48,7 +48,18 @@ def lisp_eval(x, env = {})
     _, var, exp = x
     raise "#{var} is not defined" unless env.find(var) 
     env[var] = lisp_eval(exp, env)
-  else # procedure call
+  elsif x[0] == 'lambda' # (lambda (r) (+ r r))
+    _, formals, body = x
+    Proc.new do |*args| 
+      # create an environment local to this proc using the formal
+      # parameters, e.g. 'r' and the arguments supplied, e.g. 2. Set
+      # the outer env to the one supplied to lisp_eval
+      local_env = Env.new(formals, args, env)
+
+      # evaluate the body (e.g. '+ r r') using the local env
+      lisp_eval(body, local_env)
+    end
+  else # procedure call (+ 1 2)
     exps = x.map {|exp| lisp_eval(exp, env)}
     proc = exps.shift
     proc.call(*exps)

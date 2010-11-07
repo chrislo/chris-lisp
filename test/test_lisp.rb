@@ -1,4 +1,5 @@
 require 'test/unit' 
+require 'yaml'
 
 $:.unshift(File.join(File.dirname(__FILE__),'..','lib'))
 require 'lisp'
@@ -8,7 +9,7 @@ class EnvTest < Test::Unit::TestCase
     env = Env.new
     assert_nil(env.outer)
   end
-  
+
   def test_add_key
     env = Env.new
     env[:a] = 5
@@ -102,5 +103,13 @@ class LispTest < Test::Unit::TestCase
 
     code = '(+ 1 (+ 2 3))'
     assert_equal(6, lisp_eval(parse(code), env))
+  end
+
+  def test_lambda
+    env = Env.new
+    env['+'] = Proc.new {|a,b| a + b}
+    tokens = ["lambda", ["r"], ["+", "r", "r"]]
+    proc = lisp_eval(tokens, env)
+    assert_equal(4, proc.call(2))
   end
 end
