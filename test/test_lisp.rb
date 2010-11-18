@@ -1,4 +1,4 @@
-require 'test/unit' 
+require 'test/unit'
 require 'yaml'
 
 $:.unshift(File.join(File.dirname(__FILE__),'..','lib'))
@@ -38,7 +38,7 @@ class EnvTest < Test::Unit::TestCase
   end
 end
 
-class LispTest < Test::Unit::TestCase 
+class LispTest < Test::Unit::TestCase
   def test_tokenize
     program = "(set! x*2 (* x 2))"
     assert_equal(['(', 'set!', 'x*2', '(', '*', 'x', '2', ')', ')'],
@@ -82,7 +82,7 @@ class LispTest < Test::Unit::TestCase
     lisp_eval(['set!', 'x', 2], env)
     assert_equal(env['x'], 2)
   end
-  
+
   def test_eval_symbol
     env = Env.new
     env['+'] = 5
@@ -112,4 +112,16 @@ class LispTest < Test::Unit::TestCase
     proc = lisp_eval(tokens, env)
     assert_equal(4, proc.call(2))
   end
+
+  def test_assign_lambda
+    env = Env.new
+    env['*'] = Proc.new {|a,b| a * b}
+    code = '(define square (lambda (x) (* x x)))'
+    lisp_eval(parse(code), env)
+
+    code = '(square 3)'
+    assert_equal(9, lisp_eval(parse(code), env))
+  end
 end
+
+
