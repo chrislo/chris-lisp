@@ -36,6 +36,20 @@ class EnvTest < Test::Unit::TestCase
     outer_env[:a] = 5
     assert_equal(outer_env, inner_env.find(:a))
   end
+
+  def test_add_globals
+    e = Env.new
+    Env.add_globals(e)
+    assert_equal(3, e['+'].call(1,2))
+    assert_equal(6, e['*'].call(3,2))
+    assert_equal(1, e['-'].call(3,2))
+    assert_equal(6, e['/'].call(12,2))
+    assert_equal(true, e['<'].call(2,3))
+    assert_equal(true, e['>'].call(3,2))
+
+    assert_equal(1, e['car'].call(1,2,3))
+    assert_equal([2,3], e['cdr'].call(1,2,3))
+  end
 end
 
 class LispTest < Test::Unit::TestCase

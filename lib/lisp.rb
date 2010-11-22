@@ -85,4 +85,15 @@ class Env < Hash
       end
     end
   end
+
+  def self.add_globals(env)
+    env['+'] = Proc.new {|a,b| a + b}
+    env['*'] = Proc.new {|a,b| a * b}
+    env['-'] = Proc.new {|a,b| a - b}
+    env['/'] = Proc.new {|a,b| a / b}
+    env['<'] = Proc.new {|a,b| a < b}
+    env['>'] = Proc.new {|a,b| a > b}
+    env['car'] = Proc.new {|*args| args[0]}
+    env['cdr'] = Proc.new {|*args| args.shift; args}
+  end
 end
