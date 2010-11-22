@@ -8,11 +8,13 @@ Here's my (work in progress) interpretation of Peter Norvig's Scheme[http://norv
 
     require 'lisp'
 
-    # I haven't implemented a default environment yet,
-    # here's a simple one
+    # Define the environment. I provide a basic one.
     env = Env.new
-    env['+'] = Proc.new {|a,b| a + b}
+    Env.add_globals(env)
 
-    # Eval the lisp code
-    code = '(+ 1 (+ 1 2))'
-    lisp_eval(parse(code), env) #=> 4 
+    # Eval some lisp code
+    code = '(define area (lambda (r) (* 3.141592653 (* r r))))'
+    lisp_eval(parse(code), env)
+
+    code = '(area 3)'
+    lisp_eval(parse(code), env) #=> 28.274333877
